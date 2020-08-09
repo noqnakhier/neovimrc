@@ -347,7 +347,10 @@ autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeIm
 
 " Map keys to command
 autocmd FileType go nmap <leader>gj :CocCommand go.tags.add json<cr>
+autocmd FileType go nmap <leader>glj :CocCommand go.tags.add.line json<cr>
 autocmd FileType go nmap <leader>gy :CocCommand go.tags.add yaml<cr>
+autocmd FileType go nmap <leader>gly :CocCommand go.tags.add.line yaml<cr>
 autocmd FileType go nmap <leader>gc :CocCommand go.tags.clear<cr>
+autocmd FileType go nmap <leader>glc :CocCommand go.tags.clear.line<cr>
 
 
