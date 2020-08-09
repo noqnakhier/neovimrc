@@ -102,7 +102,7 @@ let g:vim_markdown_math = 1
 " Defx的基本设置
 """"""""""""""""""""""""""""""""
 call defx#custom#option('_', {
-      \ 'winwidth': 40,
+      \ 'winwidth': 30,
       \ 'split': 'vertical',
       \ 'direction': 'topleft',
       \ 'show_ignored_files': 0,
@@ -186,7 +186,10 @@ hi def link Defx_git_Ignored Comment
 " Plug 'kristijanhusak/defx-icons'
 " disbale syntax highlighting to prevent performence issue
 " let g:defx_icons_enable_syntax_highlight = 1
+"
 
+" 最后一个窗口时关闭
+autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
 """"""""""""""""""""""""""""""""
 " COC Setting设置"
 """"""""""""""""""""""""""""""""
@@ -346,4 +349,5 @@ autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeIm
 autocmd FileType go nmap <leader>gj :CocCommand go.tags.add json<cr>
 autocmd FileType go nmap <leader>gy :CocCommand go.tags.add yaml<cr>
 autocmd FileType go nmap <leader>gc :CocCommand go.tags.clear<cr>
+
 
