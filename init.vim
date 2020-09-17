@@ -46,6 +46,9 @@ nmap <silent> <leader>wl <C-w>l
 nmap <silent> <leader>wj <C-w>j
 nmap <silent> <leader>wj <C-w>k
 
+" 退出Terminal模式的按键设置
+"tnoremap <Esc> <C-\><C-n>
+
 """"""""""""""""""""""""""""""""
 " Vim-Plug插件管理配置
 """"""""""""""""""""""""""""""""
@@ -65,16 +68,18 @@ Plug 'kristijanhusak/defx-git'
 Plug 'jiangmiao/auto-pairs'
 Plug 'crusoexia/vim-monokai'
 Plug 'rust-lang/rust.vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 call plug#end()
 
 """"""""""""""""""""""""""""""""
 " UltiSnips快捷键设置
 """"""""""""""""""""""""""""""""
-let g:UltiSnipsExpandTrigger = '<c-e>'
-let g:UltiSnipsListSnippets = '<c-tab>'
-let g:UltiSnipsJumpForwardTrigger = '<c-j>'
-let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
+"let g:UltiSnipsExpandTrigger = '<c-e>'
+"let g:UltiSnipsListSnippets = '<c-tab>'
+"let g:UltiSnipsJumpForwardTrigger = '<c-j>'
+"let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
+
 
 
 """"""""""""""""""""""""""""""""
@@ -92,11 +97,9 @@ set conceallevel=2
 " To disable conceal regardless of conceallevel setting, add the following to your .vimrc:
 let g:vim_markdown_conceal = 0
 
-" let g:vim_markdown_fenced_languages = ['csharp=cs']
+let g:vim_markdown_fenced_languages = ['csharp=cs', 'golang=go', 'javascript=js']
 let g:vim_markdown_math = 1
 " let g:vim_markdown_frontmatter = 1
-" 退出Terminal模式的按键设置
-" tnoremap <Esc> <C-\><C-n>
 
 """"""""""""""""""""""""""""""""
 " Defx的基本设置
@@ -353,4 +356,35 @@ autocmd FileType go nmap <leader>gly :CocCommand go.tags.add.line yaml<cr>
 autocmd FileType go nmap <leader>gc :CocCommand go.tags.clear<cr>
 autocmd FileType go nmap <leader>glc :CocCommand go.tags.clear.line<cr>
 
+"""""""""""""""""""""
+" coc-snippets settings
+"""""""""""""""""""""
+" Use <C-l> for trigger snippet expand.
+imap <C-e> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+
+""""""""""""""""""""""
+" Markdown Settings
+""""""""""""""""""""""
+let g:vim_markdown_math = 1
+
+""""""""""""""""""""""
+" Vimwiki Settings
+""""""""""""""""""""""
+" let g:vimwiki_list = [ {'path': '~/Documents/mywiki/tech', 'syntax': 'markdown', 'ext': '.md'}, 
+"           \ { 'path': '~/Documents/mywiki/works','syntax': 'markdown', 'ext': '.md'}]
 

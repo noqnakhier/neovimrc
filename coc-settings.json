@@ -13,6 +13,8 @@
     "go.tags": {
         "options": "json=",
         "transform":"camelcase"
-    }
+    },
+
+    "python.jediEnabled": false
 }
 
