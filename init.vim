@@ -14,6 +14,30 @@ if has('nvim')
     let g:loaded_python_provider = 0
 endif
 
+""""""""""""""""""""""""""""""""
+" Vim-Plug插件管理配置
+""""""""""""""""""""""""""""""""
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'fatih/vim-go'
+Plug 'kristijanhusak/defx-git'
+Plug 'jiangmiao/auto-pairs'
+Plug 'crusoexia/vim-monokai'
+Plug 'rust-lang/rust.vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+call plug#end()
+
 
 """"""""""""""""""""""""""""""""
 " 基本配置
@@ -33,6 +57,7 @@ set encoding=utf8
 set termencoding=utf-8
 set filetype=unix
 let mapleader=","
+colorscheme monokai
 
 """"""""""""""""""""""""""""""""
 " 窗口操作快捷键
@@ -49,28 +74,6 @@ nmap <silent> <leader>wj <C-w>k
 " 退出Terminal模式的按键设置
 "tnoremap <Esc> <C-\><C-n>
 
-""""""""""""""""""""""""""""""""
-" Vim-Plug插件管理配置
-""""""""""""""""""""""""""""""""
-function! DoRemote(arg)
-  UpdateRemotePlugins
-endfunction
-
-call plug#begin('~/.vim/plugged')
-
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
-Plug 'scrooloose/nerdtree'
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'fatih/vim-go'
-Plug 'kristijanhusak/defx-git'
-Plug 'jiangmiao/auto-pairs'
-Plug 'crusoexia/vim-monokai'
-Plug 'rust-lang/rust.vim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-
-call plug#end()
 
 """"""""""""""""""""""""""""""""
 " UltiSnips快捷键设置
@@ -81,6 +84,11 @@ call plug#end()
 "let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 
 
+""""""""""""""""""""""""""""""""
+" Vim-Plug插件管理配置
+""""""""""""""""""""""""""""""""
+
+let g:airline#extensions#tabline#enabled = 1
 
 """"""""""""""""""""""""""""""""
 " Vim Markdown设置
@@ -162,7 +170,10 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> R defx#do_action('redraw')
 endfunction
 
+""""""""""""""""""""""""""""""""
 " Defx Git 设置
+""""""""""""""""""""""""""""""""
+
 let g:defx_git#indicators = {
   \ 'Modified'  : '✹',
   \ 'Staged'    : '✚',
@@ -193,6 +204,7 @@ hi def link Defx_git_Ignored Comment
 
 " 最后一个窗口时关闭
 autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
+
 """"""""""""""""""""""""""""""""
 " COC Setting设置"
 """"""""""""""""""""""""""""""""
@@ -341,7 +353,10 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
+"""""""""""""""""""""""""""
 " Golang setting
+"""""""""""""""""""""""""""
+
 " 这个设置与COC相冲突，禁止后由coc提供此功能
 let g:go_def_mapping_enabled = 0
 
@@ -356,9 +371,10 @@ autocmd FileType go nmap <leader>gly :CocCommand go.tags.add.line yaml<cr>
 autocmd FileType go nmap <leader>gc :CocCommand go.tags.clear<cr>
 autocmd FileType go nmap <leader>glc :CocCommand go.tags.clear.line<cr>
 
-"""""""""""""""""""""
+"""""""""""""""""""""""""""
 " coc-snippets settings
-"""""""""""""""""""""
+"""""""""""""""""""""""""""
+
 " Use <C-l> for trigger snippet expand.
 imap <C-e> <Plug>(coc-snippets-expand)
 
@@ -376,15 +392,3 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " Use <leader>x for convert visual selected code to snippet
 xmap <leader>x  <Plug>(coc-convert-snippet)
-
-""""""""""""""""""""""
-" Markdown Settings
-""""""""""""""""""""""
-let g:vim_markdown_math = 1
-
-""""""""""""""""""""""
-" Vimwiki Settings
-""""""""""""""""""""""
-" let g:vimwiki_list = [ {'path': '~/Documents/mywiki/tech', 'syntax': 'markdown', 'ext': '.md'}, 
-"           \ { 'path': '~/Documents/mywiki/works','syntax': 'markdown', 'ext': '.md'}]
-
