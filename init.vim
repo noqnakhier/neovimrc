@@ -35,6 +35,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'ferrine/md-img-paste.vim'
 
 call plug#end()
 
@@ -77,38 +78,46 @@ nmap <silent> <leader>wj <C-w>k
 
 """"""""""""""""""""""""""""""""
 " UltiSnips快捷键设置
-""""""""""""""""""""""""""""""""
-"let g:UltiSnipsExpandTrigger = '<c-e>'
-"let g:UltiSnipsListSnippets = '<c-tab>'
-"let g:UltiSnipsJumpForwardTrigger = '<c-j>'
-"let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
+"""""""""""""""""""""""""""""""""
+let g:UltiSnipsExpandTrigger = '<c-e>'
+let g:UltiSnipsListSnippets = '<c-tab>'
+let g:UltiSnipsJumpForwardTrigger = '<c-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 
 
 """"""""""""""""""""""""""""""""
 " Vim-Plug插件管理配置
 """"""""""""""""""""""""""""""""
-
 let g:airline#extensions#tabline#enabled = 1
+
 
 """"""""""""""""""""""""""""""""
 " Vim Markdown设置
 """"""""""""""""""""""""""""""""
 " 关闭markdown的自动折叠功能
-let g:vim_markdown_folding_disabled = 0
+let g:vim_markdown_folding_disabled = 1
 
 " Allow for the TOC window to auto-fit when it's possible for it to shrink. It never increases its default size (half screen), it only shrinks.
 let g:vim_markdown_toc_autofit = 1
 
 " To enable conceal use Vim's standard conceal configuration.
-set conceallevel=2
+" set conceallevel=2
 
 " To disable conceal regardless of conceallevel setting, add the following to your .vimrc:
 let g:vim_markdown_conceal = 0
 
+let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_fenced_languages = ['csharp=cs', 'golang=go', 'javascript=js']
 let g:vim_markdown_math = 1
 " let g:vim_markdown_frontmatter = 1
 
+" img-paste-vim 设置，Linux需要安装xclip
+autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR> 
+"let g:mdip_imgdir = 'img'
+"let g:mdip_imgname = 'image'
+ 
+ 
+ 
 """"""""""""""""""""""""""""""""
 " Defx的基本设置
 """"""""""""""""""""""""""""""""
@@ -370,25 +379,3 @@ autocmd FileType go nmap <leader>gy :CocCommand go.tags.add yaml<cr>
 autocmd FileType go nmap <leader>gly :CocCommand go.tags.add.line yaml<cr>
 autocmd FileType go nmap <leader>gc :CocCommand go.tags.clear<cr>
 autocmd FileType go nmap <leader>glc :CocCommand go.tags.clear.line<cr>
-
-"""""""""""""""""""""""""""
-" coc-snippets settings
-"""""""""""""""""""""""""""
-
-" Use <C-l> for trigger snippet expand.
-imap <C-e> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-" Use <leader>x for convert visual selected code to snippet
-xmap <leader>x  <Plug>(coc-convert-snippet)
