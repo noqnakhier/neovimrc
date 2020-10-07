@@ -21,7 +21,7 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
@@ -33,9 +33,12 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'crusoexia/vim-monokai'
 Plug 'rust-lang/rust.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'mzlogin/vim-markdown-toc'
+Plug 'ferrine/md-img-paste.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ferrine/md-img-paste.vim'
+
 
 call plug#end()
 
@@ -110,6 +113,11 @@ let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_fenced_languages = ['csharp=cs', 'golang=go', 'javascript=js']
 let g:vim_markdown_math = 1
 " let g:vim_markdown_frontmatter = 1
+" Set image paste 
+autocmd FileType markdown nmap <buffer><silent> <leader>mp :call mdip#MarkdownClipboardImage()<CR>
+
+let g:vmt_auto_update_on_save = 0
+
 
 " img-paste-vim 设置，Linux需要安装xclip
 autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR> 
