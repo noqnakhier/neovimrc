@@ -68,11 +68,11 @@ colorscheme monokai
 nmap <silent> <leader>wc <C-w>c
 nmap <silent> <leader>wo <C-w>o
 nmap <silent> <leader>ws <C-w>s
-nmap <silent> <leader>wt <C-w>v
+nmap <silent> <leader>wv <C-w>v
 nmap <silent> <leader>wh <C-w>h
 nmap <silent> <leader>wl <C-w>l
 nmap <silent> <leader>wj <C-w>j
-nmap <silent> <leader>wj <C-w>k
+nmap <silent> <leader>wk <C-w>k
 
 " 退出Terminal模式的按键设置
 "tnoremap <Esc> <C-\><C-n>
@@ -187,9 +187,11 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select')
   " 刷新
   nnoremap <silent><buffer><expr> R defx#do_action('redraw')
+  " 新建文件/文件夹（如果文件名以\结尾）
+  nnoremap <silent><buffer><expr> N defx#do_action('new_file')
 endfunction
 
-""""""""""""""""""""""""""""""""
+  """"""""""""""""""""""""""""""""
 " Defx Git 设置
 """"""""""""""""""""""""""""""""
 
