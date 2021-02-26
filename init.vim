@@ -1,7 +1,6 @@
 """"""""""""""""""""""""""""""""
 " NeoVim Python设定
-""""""""""""""""""""""""""""""""
-" 使用`python -v venv venv`在相应的config文件夹中创建虚拟环境，
+"""""""""""""""""""""""""""""""" " 使用`python -v venv venv`在相应的config文件夹中创建虚拟环境，
 " 在venv环境中使用命令pip install pynvim以增加neovim的支持
 """"""""""""""""""""""""""""""""
 if has('nvim')
@@ -38,10 +37,10 @@ Plug 'ferrine/md-img-paste.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ferrine/md-img-paste.vim'
-
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'preservim/tagbar'
 
 call plug#end()
-
 
 """"""""""""""""""""""""""""""""
 " 基本配置
@@ -119,7 +118,10 @@ autocmd FileType markdown nmap <buffer><silent> <leader>mp :call mdip#MarkdownCl
 let g:vmt_auto_update_on_save = 0
 
 
-" img-paste-vim 设置，Linux需要安装xclip
+""""""""""""""""""""""""""""""""
+" img-paste-vim 设置
+" 注意：Linux需要安装xclip
+""""""""""""""""""""""""""""""""
 autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR> 
 "let g:mdip_imgdir = 'img'
 "let g:mdip_imgname = 'image'
@@ -373,8 +375,6 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 """""""""""""""""""""""""""
 " Golang setting
 """""""""""""""""""""""""""
-
-" 这个设置与COC相冲突，禁止后由coc提供此功能
 let g:go_def_mapping_enabled = 0
 
 " Add Missing imports on save
@@ -387,3 +387,9 @@ autocmd FileType go nmap <leader>gy :CocCommand go.tags.add yaml<cr>
 autocmd FileType go nmap <leader>gly :CocCommand go.tags.add.line yaml<cr>
 autocmd FileType go nmap <leader>gc :CocCommand go.tags.clear<cr>
 autocmd FileType go nmap <leader>glc :CocCommand go.tags.clear.line<cr>
+
+"""""""""""""""""""""""""""
+" LeaderF Configuration
+"""""""""""""""""""""""""""
+let g:Lf_CommandMap = {'C-N': ['C-J'], 'C-P': ['C-K']}
+
