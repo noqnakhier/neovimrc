@@ -1,5 +1,11 @@
 " 不使用弹出窗口
-GuiPopupmenu 0
+if has('nvim')
+    GuiPopupmenu 0
+else 
+    " gVim remove toolbar and menubar.
+    set guioptions-=T
+    set guioptions-=m
+endif
 
 " Gui Appearances
 if has('gui_macvim') || has('mac')
@@ -7,5 +13,6 @@ if has('gui_macvim') || has('mac')
 elseif has('unix')
     set guifont=Ubuntu\ Mono\ 13
 elseif has('win32')
-    set guifont=Consolas:h10
+    set guifont=YaHei\ Consolas\ Hybrid:h12
+    set guifontwide=SimHei:h12
 endif

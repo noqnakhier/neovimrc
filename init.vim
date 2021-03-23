@@ -1,6 +1,7 @@
 """"""""""""""""""""""""""""""""
 " NeoVim Python设定
-"""""""""""""""""""""""""""""""" " 使用`python -v venv venv`在相应的config文件夹中创建虚拟环境，
+"""""""""""""""""""""""""""""""" 
+" 使用`python -v venv venv`在相应的config文件夹中创建虚拟环境，
 " 在venv环境中使用命令pip install pynvim以增加neovim的支持
 """"""""""""""""""""""""""""""""
 if has('nvim')
@@ -25,7 +26,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'preservim/nerdtree'
 Plug 'fatih/vim-go'
 Plug 'kristijanhusak/defx-git'
 Plug 'jiangmiao/auto-pairs'
@@ -125,106 +126,21 @@ let g:vmt_auto_update_on_save = 0
 autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR> 
 "let g:mdip_imgdir = 'img'
 "let g:mdip_imgname = 'image'
+
+
+"""""""""""""""""""
+" NERDTree 设置
+""""""""""""""""""""
+
+nnoremap <leader>nd :NERDTreeToggle<CR>
+nnoremap <leader>nf :NERDTreeFocus<CR>
+
  
  
  
-""""""""""""""""""""""""""""""""
-" Defx的基本设置
-""""""""""""""""""""""""""""""""
-call defx#custom#option('_', {
-      \ 'winwidth': 30,
-      \ 'split': 'vertical',
-      \ 'direction': 'topleft',
-      \ 'show_ignored_files': 0,
-      \ 'buffer_name': 'defx',
-      \ 'toggle': 1,
-      \ 'resume': 1
-      \ })
-"参考自http://liaoph.com/modern-vim/
-"打开Defx文件浏览器，并且使用当前文件所在目录为Root
-map <silent> <leader>d :Defx `expand('%:p:h')` -search=`expand('%:p')`<CR>
-
-" Avoid the white space highting issue
-" autocmd FileType defx match ExtraWhitespace /^^/
-" Keymap in defx
-autocmd FileType defx call s:defx_my_settings()
-
-function! s:defx_my_settings() abort
-  "IndentLinesDisable
-  setl nospell
-  setl signcolumn=no
-  setl nonumber
-
-  " 展开或关闭文件夹，或者打开文件
-  nnoremap <silent><buffer><expr> o
-  \ defx#is_directory() ?
-  \ defx#do_action('open_or_close_tree') :
-  \ defx#do_action('drop',)
-
-  " 进入文件夹及其子文件夹
-  nnoremap <silent><buffer><expr> O defx#do_action('drop')
-
-  " 水平分割打开文件
-  nnoremap <silent><buffer><expr> s defx#do_action('drop', 'split')
-  " 竖直分割打开文件
-  nnoremap <silent><buffer><expr> v defx#do_action('drop', 'vsplit')
-  " 在新tab打开文件
-  nnoremap <silent><buffer><expr> t defx#do_action('drop', 'tabe')
-  " 复制
-  nnoremap <silent><buffer><expr> C defx#do_action('copy')
-  " 粘贴
-  nnoremap <silent><buffer><expr> P defx#do_action('paste')
-  " 重命名
-  nnoremap <silent><buffer><expr> M defx#do_action('rename')
-  " 移动到垃圾箱
-  nnoremap <silent><buffer><expr> D defx#do_action('remove_trash')
-  nnoremap <silent><buffer><expr> A defx#do_action('new_multiple_files')
-  " 返回上级
-  nnoremap <silent><buffer><expr> U defx#do_action('cd', ['..'])
-  " 显示隐藏文件（"."开头的文件）
-  nnoremap <silent><buffer><expr> . defx#do_action('toggle_ignored_files')
-  " 选中文件
-  nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select')
-  " 刷新
-  nnoremap <silent><buffer><expr> R defx#do_action('redraw')
-  " 新建文件/文件夹（如果文件名以\结尾）
-  nnoremap <silent><buffer><expr> N defx#do_action('new_file')
-endfunction
-
-  """"""""""""""""""""""""""""""""
-" Defx Git 设置
-""""""""""""""""""""""""""""""""
-
-let g:defx_git#indicators = {
-  \ 'Modified'  : '✹',
-  \ 'Staged'    : '✚',
-  \ 'Untracked' : '✭',
-  \ 'Renamed'   : '➜',
-  \ 'Unmerged'  : '═',
-  \ 'Ignored'   : '☒',
-  \ 'Deleted'   : '✖',
-  \ 'Unknown'   : '?'
-  \ }
-let g:defx_git#column_length = 0
-hi def link Defx_filename_directory NERDTreeDirSlash
-hi def link Defx_git_Modified Special
-hi def link Defx_git_Staged Function
-hi def link Defx_git_Renamed Title
-hi def link Defx_git_Unmerged Label
-hi def link Defx_git_Untracked Tag
-hi def link Defx_git_Ignored Comment
-
-" Defx icons
-" Requires nerd-font, install at https://github.com/ryanoasis/nerd-fonts or
-" brew cask install font-hack-nerd-font
-" Then set non-ascii font to Driod sans mono for powerline in iTerm2
-" Plug 'kristijanhusak/defx-icons'
-" disbale syntax highlighting to prevent performence issue
-" let g:defx_icons_enable_syntax_highlight = 1
-"
-
-" 最后一个窗口时关闭
-autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
 
 """"""""""""""""""""""""""""""""
 " COC Setting设置"
