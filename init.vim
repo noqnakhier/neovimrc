@@ -124,7 +124,7 @@ let g:vmt_auto_update_on_save = 0
 " 注意：Linux需要安装xclip
 """"""""""""""""""""""""""""""""
 autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR> 
-"let g:mdip_imgdir = 'img'
+let g:mdip_imgdir = 'images'
 "let g:mdip_imgname = 'image'
 
 
